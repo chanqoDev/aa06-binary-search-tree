@@ -5,7 +5,14 @@ const { BinarySearchTree, TreeNode } = require('./binary-search-tree.js');
 // Practice problems on binary trees
 
 function findMinBST (rootNode) {
-  // Your code here 
+  // if the rootNode not defined return  undefiend 
+  if (!rootNode) { return undefined };
+  // current node is the a root
+  let currentNode = rootNode;
+  while (currentNode.left) {
+    currentNode = currentNode.left;
+  }
+  return currentNode.val;
 }
 
 function findMaxBST (rootNode) {
