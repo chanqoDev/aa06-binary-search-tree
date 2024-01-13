@@ -62,15 +62,15 @@ function getHeight(rootNode) {
 }
 
 function balancedTree(rootNode) {
-   if (!rootNode) return true;
-   const leftHeight = getHeight(rootNode.left);
-   const rightHeight = getHeight(rootNode.right);
-   const heightDiff = Math.abs(leftHeight - rightHeight);
-   return (
-     heightDiff <= 0 &&
-     balancedTree(rootNode.left) &&
-     balancedTree(rootNode.right)
-   );
+  if (!rootNode) return true;
+  const leftHeight = getHeight(rootNode.left);
+  const rightHeight = getHeight(rootNode.right);
+  const heightDiff = Math.abs(leftHeight - rightHeight);
+  return (
+    heightDiff <= 1 &&
+    balancedTree(rootNode.left) &&
+    balancedTree(rootNode.right)
+  );
 }
 
 function countNodes(rootNode) {
