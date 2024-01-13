@@ -83,7 +83,16 @@ function getParentNode(rootNode, target) {
 }
 
 function inOrderPredecessor(rootNode, target) {
-  // Your code here
+  let predecessor = null;
+  while (rootNode) {
+    if (rootNode.val >= target) {
+      rootNode = rootNode.left;
+    } else {
+      predecessor = rootNode.val;
+      rootNode = rootNode.right;
+    }
+  }
+  return predecessor;
 }
 
 function deleteNodeBST(rootNode, target) {
