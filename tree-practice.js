@@ -74,7 +74,8 @@ function balancedTree(rootNode) {
 }
 
 function countNodes(rootNode) {
-  // Your code here
+  if (!rootNode) return 0;
+  return 1 + countNodes(rootNode.left) + countNodes(rootNode.right);
 }
 
 function getParentNode(rootNode, target) {
