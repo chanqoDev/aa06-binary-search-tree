@@ -56,13 +56,21 @@ function findMaxBT(rootNode) {
 function getHeight(rootNode) {
   if (!rootNode) return -1;
   if (!rootNode.left && !rootNode.right) return 0;
-  let leftHeight = getHeight(rootNode.left);
-  let rightHeight = getHeight(rootNode.right);
+  const leftHeight = getHeight(rootNode.left);
+  const rightHeight = getHeight(rootNode.right);
   return Math.max(leftHeight, rightHeight) + 1;
 }
 
 function balancedTree(rootNode) {
-  // Your code here
+   if (!rootNode) return true;
+   const leftHeight = getHeight(rootNode.left);
+   const rightHeight = getHeight(rootNode.right);
+   const heightDiff = Math.abs(leftHeight - rightHeight);
+   return (
+     heightDiff <= 0 &&
+     balancedTree(rootNode.left) &&
+     balancedTree(rootNode.right)
+   );
 }
 
 function countNodes(rootNode) {
