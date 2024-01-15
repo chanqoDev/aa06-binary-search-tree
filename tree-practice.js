@@ -77,9 +77,37 @@ function countNodes(rootNode) {
   if (!rootNode) return 0;
   return 1 + countNodes(rootNode.left) + countNodes(rootNode.right);
 }
+/**
+ * 
+ *   if (rootNode.val === target) return null;
+  const stack = [rootNode];
 
+  while (stack.length) {
+    const curr = stack.pop();
+
+    if ((curr.left && curr.left.val === target) || (curr.right && curr.right.val === target)) {
+      return curr;
+    };
+
+    if (curr.left) stack.push(curr.left);
+    if (curr.right) stack.push(curr.right);
+  };
+
+  return undefined;
+
+ */
 function getParentNode(rootNode, target) {
-  // Your code here
+  if (rootNode.val === target) return null
+  let curr = rootNode;
+  while (curr) {
+    if ((curr.left && curr.left.val === target) || (curr.right && curr.right.val === target)) {
+      return curr;
+    } else if (target < curr.val) {
+      curr = curr.left;
+    } else {
+      curr = curr.right;
+    }
+  }
 }
 
 function inOrderPredecessor(rootNode, target) {
@@ -98,6 +126,7 @@ function inOrderPredecessor(rootNode, target) {
 function deleteNodeBST(rootNode, target) {
   // Do a traversal to find the node. Keep track of the parent
   // Undefined if the target cannot be found
+
   // Set target based on parent
   // Case 0: Zero children and no parent:
   //   return null
@@ -112,15 +141,17 @@ function deleteNodeBST(rootNode, target) {
   //   Make the parent point to the child
 }
 
-let btRoot = new TreeNode(1);
-btRoot.left = new TreeNode(2);
-btRoot.left.left = new TreeNode(4);
-btRoot.left.right = new TreeNode(5);
-btRoot.right = new TreeNode(3);
-btRoot.right.left = new TreeNode(6);
-btRoot.right.right = new TreeNode(7);
-
-console.log(findMinBT(btRoot));
+// Testing the binary search tree
+const bstRoot = new TreeNode(5);
+bstRoot.left = new TreeNode(3);
+bstRoot.right = new TreeNode(7);
+bstRoot.left.left = new TreeNode(2);
+bstRoot.left.right = new TreeNode(4);
+bstRoot.right.left = new TreeNode(6);
+bstRoot.right.right = new TreeNode(8);
+console.log(getParentNode(bstRoot, 2))
+console.log(getParentNode(bstRoot, 4))
+console.log(getParentNode(bstRoot, 7))
 
 module.exports = {
   findMinBST,
