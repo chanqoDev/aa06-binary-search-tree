@@ -77,25 +77,7 @@ function countNodes(rootNode) {
   if (!rootNode) return 0;
   return 1 + countNodes(rootNode.left) + countNodes(rootNode.right);
 }
-/**
- * 
- *   if (rootNode.val === target) return null;
-  const stack = [rootNode];
 
-  while (stack.length) {
-    const curr = stack.pop();
-
-    if ((curr.left && curr.left.val === target) || (curr.right && curr.right.val === target)) {
-      return curr;
-    };
-
-    if (curr.left) stack.push(curr.left);
-    if (curr.right) stack.push(curr.right);
-  };
-
-  return undefined;
-
- */
 function getParentNode(rootNode, target) {
   if (rootNode.val === target) return null
   let curr = rootNode;
