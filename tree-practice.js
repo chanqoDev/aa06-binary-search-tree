@@ -106,34 +106,98 @@ function inOrderPredecessor(rootNode, target) {
 }
 
 function deleteNodeBST(rootNode, target) {
-  // Do a traversal to find the node. Keep track of the parent
-  // Undefined if the target cannot be found
+  if (!rootNode) {
+    return undefined;
+  }
 
-  // Set target based on parent
-  // Case 0: Zero children and no parent:
-  //   return null
-  // Case 1: Zero children:
-  //   Set the parent that points to it to null
-  // Case 2: Two children:
-  //  Set the value to its in-order predecessor, then delete the predecessor
-  //  Replace target node with the left most child on its right side,
-  //  or the right most child on its left side.
-  //  Then delete the child that it was replaced with.
-  // Case 3: One child:
-  //   Make the parent point to the child
+  let parent = null;
+  let current = rootNode;
+
+  // Find the node to be deleted and its parent
+  while (current && current.val !== target) {
+    parent = current;
+    if (target < current.val) {
+      current = current.left;
+    } else {
+      current = current.right;
+    }
+  }
+
+  // If the target is not found, return undefined
+  if (!current) {
+    return undefined;
+  }
+
+  // Determine the number of children the node has
+  const numChildren = (current.left ? 1 : 0) + (current.right ? 1 : 0);
+
+  // Case 0: Zero children and no parent
+  if (numChildren === 0 && !parent) {
+    return null;
+  }
+
+  // Case 1: Zero children
+  if (numChildren === 0) {
+    if (parent.left === current) {
+      parent.left = null;
+    } else {
+      parent.right = null;
+    }
+  }
+
+  // Case 2: Two children
+  else if (numChildren === 2) {
+    let predecessorParent = current;
+    let predecessor = current.left;
+
+    // Find the in-order predecessor
+    while (predecessor.right) {
+      predecessorParent = predecessor;
+      predecessor = predecessor.right;
+    }
+
+    // Replace the value of the current node with the in-order predecessor
+    current.val = predecessor.val;
+
+    // Remove the in-order predecessor
+    if (predecessorParent.left === predecessor) {
+      predecessorParent.left = null;
+    } else {
+      predecessorParent.right = null;
+    }
+  }
+
+  // Case 3: One child
+  else {
+    const child = current.left || current.right;
+
+    // Update the parent to point to the child
+    if (!parent) {
+      // If there's no parent, it means the root is being deleted
+      return child;
+    }
+
+    if (parent.left === current) {
+      parent.left = child;
+    } else {
+      parent.right = child;
+    }
+  }
+
+  return rootNode;
 }
 
 // Testing the binary search tree
-const bstRoot = new TreeNode(5);
-bstRoot.left = new TreeNode(3);
-bstRoot.right = new TreeNode(7);
-bstRoot.left.left = new TreeNode(2);
-bstRoot.left.right = new TreeNode(4);
-bstRoot.right.left = new TreeNode(6);
-bstRoot.right.right = new TreeNode(8);
-console.log(getParentNode(bstRoot, 2))
-console.log(getParentNode(bstRoot, 4))
-console.log(getParentNode(bstRoot, 7))
+// const bstRoot = new TreeNode(5);
+// bstRoot.left = new TreeNode(3);
+// bstRoot.right = new TreeNode(7);
+// bstRoot.left.left = new TreeNode(2);
+// bstRoot.left.right = new TreeNode(4);
+// bstRoot.right.left = new TreeNode(6);
+// bstRoot.right.right = new TreeNode(8);
+// console.log(getParentNode(bstRoot, 2))
+// console.log(getParentNode(bstRoot, 4))
+// console.log(getParentNode(bstRoot, 7))
 
 module.exports = {
   findMinBST,
